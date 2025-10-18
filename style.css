@@ -1,0 +1,40 @@
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+#game {
+  width: 600px;
+  margin: 20px auto;
+  border: 2px solid white;
+  padding: 10px;
+  background: #111;
+}
+
+#stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#play-area {
+  position: relative;
+  height: 400px;
+  background: #222;
+  overflow: hidden;
+}
+
+.word {
+  position: absolute;
+  font-size: 20px;
+  color: yellow;
+}
+
+#input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+}
