@@ -10,7 +10,7 @@ let activeWords = [];
 
 // 🎯 Start slower
 let spawnInterval = 4000; // new word every 4 seconds
-let fallSpeed = 0.5;      // half a pixel per frame
+let fallSpeed = 0.05;      // half a pixel per frame
 
 let spawnTimer; // we'll reset this when level changes
 
