@@ -7,16 +7,18 @@ let level = 1;
 let lives = 3;
 let words = ["cat", "dog", "space", "math", "star", "game"];
 let activeWords = [];
-let spawnInterval = 2000; // ms
-let fallSpeed = 1; // px per frame
+
+// 🎯 Start slower
+let spawnInterval = 4000; // new word every 4 seconds
+let fallSpeed = 0.5;      // half a pixel per frame
+
+let spawnTimer; // we'll reset this when level changes
 
 function spawnWord() {
   let text;
   if (Math.random() < 0.5) {
-    // random word
     text = words[Math.floor(Math.random() * words.length)];
   } else {
-    // simple math problem
     let a = Math.floor(Math.random() * 10);
     let b = Math.floor(Math.random() * 10);
     text = `${a}+${b}=${a+b}`;
@@ -38,7 +40,6 @@ function gameLoop() {
     word.el.style.top = top + fallSpeed + "px";
 
     if (top > 380) {
-      // word reached bottom
       playArea.removeChild(word.el);
       activeWords.splice(index, 1);
       loseLife();
@@ -57,6 +58,19 @@ function loseLife() {
   }
 }
 
+function levelUp() {
+  level++;
+  levelDisplay.textContent = "Level: " + level;
+
+  // 🚀 Speed up gradually
+  fallSpeed += 0.2; 
+  if (spawnInterval > 1000) spawnInterval -= 300;
+
+  // reset spawn timer with new interval
+  clearInterval(spawnTimer);
+  spawnTimer = setInterval(spawnWord, spawnInterval);
+}
+
 input.addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
     let typed = input.value.trim();
@@ -68,10 +82,7 @@ input.addEventListener("keydown", function(e) {
 
       // Level up every 5 kills
       if (Math.random() < 0.2) {
-        level++;
-        levelDisplay.textContent = "Level: " + level;
-        fallSpeed += 0.5;
-        if (spawnInterval > 500) spawnInterval -= 200;
+        levelUp();
       }
     } else {
       input.value = "";
@@ -79,5 +90,6 @@ input.addEventListener("keydown", function(e) {
   }
 });
 
-setInterval(spawnWord, spawnInterval);
+// start spawning words
+spawnTimer = setInterval(spawnWord, spawnInterval);
 gameLoop();
